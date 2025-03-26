@@ -1,9 +1,10 @@
 [project]
 name = "betterproto"
-version = "2.0.0b7"
+version = "2.0.1b1"
 description = "A better Protobuf / gRPC generator & library"
 authors = [
-    {name = "Daniel G. Taylor", email = "danielgtaylor@gmail.com"}
+    {name = "Daniel G. Taylor", email = "danielgtaylor@gmail.com"},
+    {name = "Fred Simon", email = "freds@moonshot.space"}
 ]
 readme = "README.md"
 repository = "https://github.com/danielgtaylor/python-betterproto"
@@ -50,7 +51,7 @@ tomlkit = ">=0.7.0"
 protoc-gen-python_betterproto = "betterproto.plugin:main"
 
 [project.optional-dependencies]
-compiler = ["ruff", "jinja2"]
+compiler = ["jinja2"]
 rust-codec = ["betterproto-rust-codec"]
 
 [tool.ruff]
@@ -167,3 +168,8 @@ require_poetry = true
 [build-system]
 requires = ["poetry-core>=2.0.0,<3"]
 build-backend = "poetry.core.masonry.api"
+
+[[tool.poetry.source]]
+name = "memsi-pypi"
+url = "https://moonshot.jfrog.io//artifactory/api/pypi/memsi-pypi/simple"
+priority = "primary"

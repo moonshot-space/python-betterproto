@@ -181,7 +181,7 @@ def get_comment(
             # This is a field, message, enum, service, or method
             if len(lines) == 1 and len(lines[0]) < 79 - indent - 6:
                 return f'{pad}"""{lines[0]}"""'
-            else:
+            elif len(lines) > 0:
                 joined = f"\n{pad}".join(lines)
                 return f'{pad}"""\n{pad}{joined}\n{pad}"""'
 
@@ -449,6 +449,8 @@ class FieldCompiler(MessageCompiler):
             args.append(f"wraps={self.field_wraps}")
         if self.optional:
             args.append(f"optional=True")
+        if self.proto_name and self.proto_name != self.py_name:
+            args.append(f"proto_name=\"{self.proto_name}\"")
         return args
 
     @property

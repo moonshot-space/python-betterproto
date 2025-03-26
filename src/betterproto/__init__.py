@@ -202,6 +202,8 @@ class FieldMetadata:
     wraps: Optional[str] = None
     # Is the field optional
     optional: Optional[bool] = False
+    # Original proto field name
+    proto_name: Optional[str] = None
 
     @staticmethod
     def get(field: dataclasses.Field) -> "FieldMetadata":
@@ -217,13 +219,14 @@ def dataclass_field(
     group: Optional[str] = None,
     wraps: Optional[str] = None,
     optional: bool = False,
+    proto_name: Optional[str] = None,
 ) -> dataclasses.Field:
     """Creates a dataclass field with attached protobuf metadata."""
     return dataclasses.field(
         default=None if optional else PLACEHOLDER,  # type: ignore
         metadata={
             "betterproto": FieldMetadata(
-                number, proto_type, map_types, group, wraps, optional
+                number, proto_type, map_types, group, wraps, optional, proto_name
             )
         },
     )
@@ -234,96 +237,96 @@ def dataclass_field(
 # out at runtime. The generated dataclass variables are still typed correctly.
 
 
-def enum_field(number: int, group: Optional[str] = None, optional: bool = False) -> Any:
-    return dataclass_field(number, TYPE_ENUM, group=group, optional=optional)
+def enum_field(number: int, group: Optional[str] = None, optional: bool = False, proto_name: Optional[str] = None) -> Any:
+    return dataclass_field(number, TYPE_ENUM, group=group, optional=optional, proto_name=proto_name)
 
 
-def bool_field(number: int, group: Optional[str] = None, optional: bool = False) -> Any:
-    return dataclass_field(number, TYPE_BOOL, group=group, optional=optional)
+def bool_field(number: int, group: Optional[str] = None, optional: bool = False, proto_name: Optional[str] = None) -> Any:
+    return dataclass_field(number, TYPE_BOOL, group=group, optional=optional, proto_name=proto_name)
 
 
 def int32_field(
-    number: int, group: Optional[str] = None, optional: bool = False
+    number: int, group: Optional[str] = None, optional: bool = False, proto_name: Optional[str] = None
 ) -> Any:
-    return dataclass_field(number, TYPE_INT32, group=group, optional=optional)
+    return dataclass_field(number, TYPE_INT32, group=group, optional=optional, proto_name=proto_name)
 
 
 def int64_field(
-    number: int, group: Optional[str] = None, optional: bool = False
+    number: int, group: Optional[str] = None, optional: bool = False, proto_name: Optional[str] = None
 ) -> Any:
-    return dataclass_field(number, TYPE_INT64, group=group, optional=optional)
+    return dataclass_field(number, TYPE_INT64, group=group, optional=optional, proto_name=proto_name)
 
 
 def uint32_field(
-    number: int, group: Optional[str] = None, optional: bool = False
+    number: int, group: Optional[str] = None, optional: bool = False, proto_name: Optional[str] = None
 ) -> Any:
-    return dataclass_field(number, TYPE_UINT32, group=group, optional=optional)
+    return dataclass_field(number, TYPE_UINT32, group=group, optional=optional, proto_name=proto_name)
 
 
 def uint64_field(
-    number: int, group: Optional[str] = None, optional: bool = False
+    number: int, group: Optional[str] = None, optional: bool = False, proto_name: Optional[str] = None
 ) -> Any:
-    return dataclass_field(number, TYPE_UINT64, group=group, optional=optional)
+    return dataclass_field(number, TYPE_UINT64, group=group, optional=optional, proto_name=proto_name)
 
 
 def sint32_field(
-    number: int, group: Optional[str] = None, optional: bool = False
+    number: int, group: Optional[str] = None, optional: bool = False, proto_name: Optional[str] = None
 ) -> Any:
-    return dataclass_field(number, TYPE_SINT32, group=group, optional=optional)
+    return dataclass_field(number, TYPE_SINT32, group=group, optional=optional, proto_name=proto_name)
 
 
 def sint64_field(
-    number: int, group: Optional[str] = None, optional: bool = False
+    number: int, group: Optional[str] = None, optional: bool = False, proto_name: Optional[str] = None
 ) -> Any:
-    return dataclass_field(number, TYPE_SINT64, group=group, optional=optional)
+    return dataclass_field(number, TYPE_SINT64, group=group, optional=optional, proto_name=proto_name)
 
 
 def float_field(
-    number: int, group: Optional[str] = None, optional: bool = False
+    number: int, group: Optional[str] = None, optional: bool = False, proto_name: Optional[str] = None
 ) -> Any:
-    return dataclass_field(number, TYPE_FLOAT, group=group, optional=optional)
+    return dataclass_field(number, TYPE_FLOAT, group=group, optional=optional, proto_name=proto_name)
 
 
 def double_field(
-    number: int, group: Optional[str] = None, optional: bool = False
+    number: int, group: Optional[str] = None, optional: bool = False, proto_name: Optional[str] = None
 ) -> Any:
-    return dataclass_field(number, TYPE_DOUBLE, group=group, optional=optional)
+    return dataclass_field(number, TYPE_DOUBLE, group=group, optional=optional, proto_name=proto_name)
 
 
 def fixed32_field(
-    number: int, group: Optional[str] = None, optional: bool = False
+    number: int, group: Optional[str] = None, optional: bool = False, proto_name: Optional[str] = None
 ) -> Any:
-    return dataclass_field(number, TYPE_FIXED32, group=group, optional=optional)
+    return dataclass_field(number, TYPE_FIXED32, group=group, optional=optional, proto_name=proto_name)
 
 
 def fixed64_field(
-    number: int, group: Optional[str] = None, optional: bool = False
+    number: int, group: Optional[str] = None, optional: bool = False, proto_name: Optional[str] = None
 ) -> Any:
-    return dataclass_field(number, TYPE_FIXED64, group=group, optional=optional)
+    return dataclass_field(number, TYPE_FIXED64, group=group, optional=optional, proto_name=proto_name)
 
 
 def sfixed32_field(
-    number: int, group: Optional[str] = None, optional: bool = False
+    number: int, group: Optional[str] = None, optional: bool = False, proto_name: Optional[str] = None
 ) -> Any:
-    return dataclass_field(number, TYPE_SFIXED32, group=group, optional=optional)
+    return dataclass_field(number, TYPE_SFIXED32, group=group, optional=optional, proto_name=proto_name)
 
 
 def sfixed64_field(
-    number: int, group: Optional[str] = None, optional: bool = False
+    number: int, group: Optional[str] = None, optional: bool = False, proto_name: Optional[str] = None
 ) -> Any:
-    return dataclass_field(number, TYPE_SFIXED64, group=group, optional=optional)
+    return dataclass_field(number, TYPE_SFIXED64, group=group, optional=optional, proto_name=proto_name)
 
 
 def string_field(
-    number: int, group: Optional[str] = None, optional: bool = False
+    number: int, group: Optional[str] = None, optional: bool = False, proto_name: Optional[str] = None
 ) -> Any:
-    return dataclass_field(number, TYPE_STRING, group=group, optional=optional)
+    return dataclass_field(number, TYPE_STRING, group=group, optional=optional, proto_name=proto_name)
 
 
 def bytes_field(
-    number: int, group: Optional[str] = None, optional: bool = False
+    number: int, group: Optional[str] = None, optional: bool = False, proto_name: Optional[str] = None
 ) -> Any:
-    return dataclass_field(number, TYPE_BYTES, group=group, optional=optional)
+    return dataclass_field(number, TYPE_BYTES, group=group, optional=optional, proto_name=proto_name)
 
 
 def message_field(
@@ -331,17 +334,18 @@ def message_field(
     group: Optional[str] = None,
     wraps: Optional[str] = None,
     optional: bool = False,
+    proto_name: Optional[str] = None
 ) -> Any:
     return dataclass_field(
-        number, TYPE_MESSAGE, group=group, wraps=wraps, optional=optional
+        number, TYPE_MESSAGE, group=group, wraps=wraps, optional=optional, proto_name=proto_name
     )
 
 
 def map_field(
-    number: int, key_type: str, value_type: str, group: Optional[str] = None
+    number: int, key_type: str, value_type: str, group: Optional[str] = None, proto_name: Optional[str] = None
 ) -> Any:
     return dataclass_field(
-        number, TYPE_MAP, map_types=(key_type, value_type), group=group
+        number, TYPE_MAP, map_types=(key_type, value_type), group=group, proto_name=proto_name
     )
 
 
