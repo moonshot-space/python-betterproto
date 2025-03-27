@@ -74,6 +74,7 @@ def traverse(
 
 
 def generate_code(request: CodeGeneratorRequest) -> CodeGeneratorResponse:
+    print(f"Generating code using Moonshot betterproto with param {request.parameter}", file=sys.stderr)
     response = CodeGeneratorResponse()
 
     plugin_options = request.parameter.split(",") if request.parameter else []
@@ -103,6 +104,11 @@ def generate_code(request: CodeGeneratorRequest) -> CodeGeneratorResponse:
             request_data.output_packages[
                 output_package_name
             ].pydantic_dataclasses = True
+
+        if "eq_true" in plugin_options:
+            request_data.output_packages[
+                output_package_name
+            ].equal_attribute = True
 
         # Gather any typing generation options.
         typing_opts = [
