@@ -403,7 +403,6 @@ def size_varint(value: int) -> int:
 def _preprocess_single(proto_type: str, wraps: str, value: Any) -> bytes:
     """Adjusts values before serialization."""
     if proto_type in (
-        TYPE_ENUM,
         TYPE_BOOL,
         TYPE_INT32,
         TYPE_INT64,
@@ -411,6 +410,8 @@ def _preprocess_single(proto_type: str, wraps: str, value: Any) -> bytes:
         TYPE_UINT64,
     ):
         return encode_varint(value)
+    elif proto_type == TYPE_ENUM:
+        return encode_varint(int(value))
     elif proto_type in (TYPE_SINT32, TYPE_SINT64):
         # Handle zig-zag encoding.
         return encode_varint(value << 1 if value >= 0 else (value << 1) ^ (~0))
